@@ -6,19 +6,6 @@ void BackRec5() {
 	std::cout << "Задание: BackRec5" << std::endl;
 	CreateMass();
 }
-
-void findAns(int a[100][100], int k, int s, std::vector <int> w){
-	if (a[k][s] == 0)
-		return;
-	if (a[k - 1][s] == a[k][s])
-		findAns(a, k - 1, s, w);
-	else
-	{
-		std::cout << k << ' ';
-		findAns(a, k - 1, s - w[k], w);
-	}
-}
-
 void CreateMass() {
 	std::cout << "Чтение из файла..." << std::endl;
 	std::ifstream file("text.txt");
@@ -69,16 +56,15 @@ void Algorithm(std::vector <int> w, std::vector <int> p, int max_weight, int n) 
 	}
 	*/
 	for (int k = 1; k <= n; k++) {
-		for (int s = 1; s <= max_weight; s++) {
+		for (int s = 1; s <= max_weight; s++) {//проходим по таблице динам. прог.
 			if (s >= w[k]) {
-				a[k][s] = std::max(a[k - 1][s], a[k - 1][s - w[k]] + p[k]);
+				a[k][s] = std::max(a[k - 1][s], a[k - 1][s - w[k]] + p[k]);//взять или нет предмет
 			}
 			else {
-				a[k][s] = a[k - 1][s];
+				a[k][s] = a[k - 1][s];//пропускаем предмет
 			}
 		}
 	}
 	std::cout << "Ответ: " << a[n][max_weight] << " ";
-	findAns(a, n, max_weight, w);
 }
 

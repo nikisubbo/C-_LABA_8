@@ -24,21 +24,18 @@ void HomeDyn15() {
 	} while (!flag);
 
 	int nz = k - 1; 
-	int oz1 = 1;    
-	int oz2 = 0;    
-	int oz3 = 0;  
-	int oz4 = 0;    
-	int total = nz + oz1 + oz2 + oz3;
+	int oz = 1;   
+	int tz = 0;  
+	int thz = 0;  
 	for (int i = 2; i <= n; i++) {
 		int _nz = nz;
-		int _oz1 = oz1;
-		int _oz2 = oz2;
-		int _oz3 = oz3;
-		nz = (_nz + _oz1 + _oz2 + _oz3) * (k - 1);
-		oz1 = _nz;
-		oz2 = _oz1;
-		oz3 = _oz2;
-		total = nz + oz1 + oz2 + oz3;
+		int _oz = oz;
+		int _tz = tz;
+		int _thz = thz;
+		nz = (_nz + _oz + _tz + _thz) * (k - 1);
+		oz = _nz;
+		tz = _oz;
+		thz = _tz;
 	}
-	std::cout << " оличество чисел из " << n << " разр€дов: " << total << std::endl;
-}
+	std::cout << " оличество " << k << "-ых чисел из " << n << " разр€дов, где не содержатс€ 3 и более идущих подр€д 0: " << nz + oz + tz + thz << std::endl;
+}// 111 110 11 0 1 100 101 10  
