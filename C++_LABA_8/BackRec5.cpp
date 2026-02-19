@@ -19,7 +19,7 @@ void CreateMass() {
 	int n = matrix[0];//кол-во предметов 
 	std::vector <int> weight(n + 1);
 	std::vector <int> prices(n + 1);
-	weight[0] = 0;
+	weight[0] = 0; 
 	prices[0] = 0;
 	for (int i = 0; i < n; i++) {
 		weight[i + 1] = matrix[i + 2];

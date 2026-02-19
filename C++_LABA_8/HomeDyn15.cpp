@@ -26,16 +26,13 @@ void HomeDyn15() {
 	int nz = k - 1; 
 	int oz = 1;   
 	int tz = 0;  
-	int thz = 0;  
 	for (int i = 2; i <= n; i++) {
 		int _nz = nz;
 		int _oz = oz;
 		int _tz = tz;
-		int _thz = thz;
-		nz = (_nz + _oz + _tz + _thz) * (k - 1);
+		nz = (_nz + _oz + _tz) * (k - 1);
 		oz = _nz;
 		tz = _oz;
-		thz = _tz;
 	}
-	std::cout << "Количество " << k << "-ых чисел из " << n << " разрядов, где не содержатся 3 и более идущих подряд 0: " << nz + oz + tz + thz << std::endl;
+	std::cout << "Количество " << k << "-ых чисел из " << n << " разрядов, где не содержатся 3 и более идущих подряд 0: " << nz + oz + tz << std::endl;
 }// 111 110 11 0 1 100 101 10  
