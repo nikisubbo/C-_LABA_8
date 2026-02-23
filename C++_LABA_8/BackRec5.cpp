@@ -9,21 +9,17 @@ void BackRec5() {
 void CreateMass() {
 	std::cout << "Чтение из файла..." << std::endl;
 	std::ifstream file("text.txt");
-	std::vector <int> matrix;
-	int number;
-	while (file >> number) {
-		matrix.push_back(number);
-	}
-	file.close();
-	int max_weight = matrix[1];
-	int n = matrix[0];//кол-во предметов 
+	int max_weight, n;//размер рюкзака и количество предметов 
+	file >> n >> max_weight;
 	std::vector <int> weight(n + 1);
 	std::vector <int> prices(n + 1);
 	weight[0] = 0; 
 	prices[0] = 0;
-	for (int i = 0; i < n; i++) {
-		weight[i + 1] = matrix[i + 2];
-		prices[i + 1] = matrix[i + n + 2];
+	for (int i = 1; i <= n; i++) {
+		file >> weight[i];
+	}
+	for (int i = 1; i <= n; i++) {
+		file >> prices[i];
 	}
 	std::cout << "Размер рюкзака: " << max_weight << std::endl;
 	std::cout << "Кол-во предметов: " << n << std::endl;
@@ -41,20 +37,7 @@ void CreateMass() {
 }
 void Algorithm(std::vector <int> w, std::vector <int> p, int max_weight, int n) {
 	std::cout << "Запуск алгоритма..." << std::endl;
-	int a[100][100];
-	for (int i = 0; i <= max_weight; i++)
-		a[0][i] = 0;
-	for (int i = 0; i <= n; i++)
-		a[i][0] = 0;
-	/*
-	std::cout << "Массив a: ";
-	for (int i = 0; i < max_weight; i++){
-		for (int j = 0; j <= n; j++) {
-			std::cout << a[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
-	*/
+	std::vector <std::vector <int>> a(n + 1, std::vector<int>(max_weight + 1, 0));//создаем таблицу динам. прог.
 	for (int k = 1; k <= n; k++) {
 		for (int s = 1; s <= max_weight; s++) {//проходим по таблице динам. прог.
 			if (s >= w[k]) {
@@ -65,6 +48,21 @@ void Algorithm(std::vector <int> w, std::vector <int> p, int max_weight, int n) 
 			}
 		}
 	}
-	std::cout << "Ответ: " << a[n][max_weight] << " ";
+	int current_weight = max_weight;
+	std::vector <int> selected_items;
+	for (int k = n; k >= 1; k--) {
+		if (current_weight >= w[k] && a[k][current_weight] == a[k - 1][current_weight - w[k]] + p[k]) {
+			selected_items.push_back(k);
+			current_weight -= w[k];
+		}
+	}
+	std::cout << "Общая ценность: " << a[n][max_weight] << std::endl;
+	std::cout << "Итоговая масса: " << max_weight - current_weight << std::endl;
+	std::cout << "Номера выбранных предметов: ";
+	for (int i = 0; i < selected_items.size(); i++) {
+		std::cout << selected_items[i] << " ";
+	}
+	std::cout << std::endl;
+
 }
 

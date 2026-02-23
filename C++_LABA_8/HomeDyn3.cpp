@@ -40,60 +40,44 @@ void HomeDyn3() {
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
-	std::string moves = "";
-	int current_index_r_1 = size_r - 1;
-	int current_index_r_2 = size_r - 2;
-	int current_index_c_1 = size_c - 2;
-	int current_index_c_2 = size_c - 1;
-	int summa = field[size_r - 1][size_c - 1];
-	bool flag = true;
-	while (flag) {
-		if ((current_index_r_1 < 0 || current_index_c_1 < 0) && (current_index_r_2 < 0 || current_index_c_2 < 0)) {
-			break;
-		}
-		int left_number;
-		int up_number;
-		if (current_index_r_1 < 0 || current_index_c_1 < 0) {
-			left_number = -1;
-			up_number = field[current_index_r_2][current_index_c_2];
-		}
-		else if (current_index_r_2 < 0 || current_index_c_2 < 0) {
-			up_number = -1;
-			left_number = field[current_index_r_1][current_index_c_1];
-		}
-		else {
-			left_number = field[current_index_r_1][current_index_c_1];
-			up_number = field[current_index_r_2][current_index_c_2];
-		}
-
-		if (left_number > up_number) {
-			moves += "L ";
-			summa += left_number;
-			field[current_index_r_1][current_index_c_1] = summa;
-			current_index_c_1--;
-			current_index_c_2--;
-		}
-		else if (left_number < up_number) {
-			moves += "U ";
-			summa += up_number;
-			field[current_index_r_2][current_index_c_2] = summa;
-			current_index_r_1--;
-			current_index_r_2--;
-		}
-		else {
-			if (field[current_index_r_1][current_index_c_1 - 1] > field[current_index_r_2][current_index_c_2 - 1]) {
-				moves += "L ";
-				summa += left_number;
-				field[current_index_r_1][current_index_c_1] = summa;
-				current_index_c_1--;
-				current_index_c_2--;
+	std::vector<std::vector<int>> d_field(size_r, std::vector<int>(size_c));
+	for (int i = 0; i < size_r; i++) {
+		for (int j = 0; j < size_c; j++) {
+			if (i == 0 && j == 0) {
+				d_field[i][j] = field[i][j];//частный случай конец
+			}
+			else if (i == 0) {
+				d_field[i][j] = d_field[i][j - 1] + field[i][j];//частный случай последний столбец
+			}
+			else if (j == 0) {
+				d_field[i][j] = d_field[i - 1][j] + field[i][j];//частный случай последняя строка
 			}
 			else {
+				d_field[i][j] = std::max(d_field[i - 1][j], d_field[i][j - 1]) + field[i][j];//проверка на лучший выбор 
+			}
+		}
+	}
+	std::string moves = "";
+	int current_index_r = size_r - 1;  
+	int current_index_c = size_c - 1;
+	int summa = d_field[current_index_r][current_index_c];//начало 
+	while (current_index_r > 0 || current_index_c > 0) {
+		if (current_index_r == 0) {//граниченое условие
+			moves += "L ";
+			current_index_c--;
+		}
+		else if (current_index_c == 0) {//граничное условие
+			moves += "U ";
+			current_index_r--;
+		}
+		else {
+			if (d_field[current_index_r - 1][current_index_c] > d_field[current_index_r][current_index_c - 1]) {
 				moves += "U ";
-				summa += up_number;
-				field[current_index_r_2][current_index_c_2] = summa;
-				current_index_r_1--;
-				current_index_r_2--;
+				current_index_r--;
+			}
+			else {
+				moves += "L ";
+				current_index_c--;
 			}
 		}
 	}
