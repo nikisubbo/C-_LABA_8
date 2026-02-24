@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Header.h"
 #include <fstream>
 #include <vector>
 #include <string>
+#include "HomeDyn3.h"
 void HomeDyn3() {
 	std::cout << "Задание HomeDyn3" << std::endl;
 	/*
@@ -16,7 +16,19 @@ void HomeDyn3() {
 		}
 	}
 	*/
-	std::fstream file("KING_INPUT.txt");
+	std::cout << "Введите название файла с входными данными: ";
+	std::string file_name;
+	std::cin >> file_name;
+	file_name = file_name + ".txt";
+	std::cout << file_name << " ";
+	std::ifstream file(file_name);
+	while (!file.is_open()) {
+		std::cout << "Такого файла не существует или невозможно открыть" << std::endl;
+		std::cout << "Введите название файла с входными данными: ";
+		std::cin >> file_name;
+		file_name = file_name + ".txt";
+		file.open(file_name);
+	}
 	std::vector <int> vec;
 	int number;
 	while (file >> number) {
@@ -81,7 +93,12 @@ void HomeDyn3() {
 			}
 		}
 	}
-	std::fstream file_output("KING_OUTPUT.txt");
+	std::cout << "Введите название файла для вывода: ";
+	std::string file_name_output;
+	std::cin >> file_name_output;
+	file_name_output = file_name_output + ".txt";
+	std::cout << file_name_output << " ";
+	std::ofstream file_output(file_name_output);
 	file_output << summa << std::endl;
 	file_output << moves;
 	file_output.close();

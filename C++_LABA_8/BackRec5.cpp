@@ -1,14 +1,25 @@
 #include <iostream>
-#include "Header.h"
 #include <vector>
 #include <fstream>
+#include "Backrec5.h"
 void BackRec5() {
 	std::cout << "Задание: BackRec5" << std::endl;
 	CreateMass();
 }
 void CreateMass() {
-	std::cout << "Чтение из файла..." << std::endl;
-	std::ifstream file("text.txt");
+	std::cout << "Введите название файла с входными данными: ";
+	std::string file_name;
+	std::cin >> file_name;
+	file_name = file_name + ".txt";
+	std::cout << file_name << " ";
+	std::ifstream file(file_name);
+	while (!file.is_open()) {
+		std::cout << "Такого файла не существует или невозможно открыть" << std::endl;
+		std::cout << "Введите название файла с входными данными: ";
+		std::cin >> file_name;
+		file_name = file_name + ".txt";
+		file.open(file_name); 
+	}
 	int max_weight, n;//размер рюкзака и количество предметов 
 	file >> n >> max_weight;
 	std::vector <int> weight(n + 1);

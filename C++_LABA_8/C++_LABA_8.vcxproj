@@ -25,7 +25,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="Backrec5.h" />
+    <ClInclude Include="HomeDyn15.h" />
+    <ClInclude Include="HomeDyn3.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="KING_INPUT.txt" />

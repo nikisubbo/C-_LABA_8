@@ -1,5 +1,7 @@
 #include <iostream>
-#include "Header.h"
+#include "BackRec5.h"
+#include "HomeDyn3.h"
+#include "HomeDyn15.h"
 int main() {
     setlocale(LC_ALL, "");
     int choice = 0;

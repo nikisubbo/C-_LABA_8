@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Header.h"
+#include "HomeDyn15.h"
 void HomeDyn15() {
 	std::cout << "Задание: HomeDyn15" << std::endl;
 	int k, n;
