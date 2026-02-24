@@ -51,7 +51,7 @@ void Algorithm(std::vector <int> w, std::vector <int> p, int max_weight, int n) 
 	int current_weight = max_weight;
 	std::vector <int> selected_items;
 	for (int k = n; k >= 1; k--) {
-		if (current_weight >= w[k] && a[k][current_weight] == a[k - 1][current_weight - w[k]] + p[k]) {
+		if (current_weight >= w[k] && a[k][current_weight] == a[k - 1][current_weight - w[k]] + p[k]) {//предмет помещается и был взят
 			selected_items.push_back(k);
 			current_weight -= w[k];
 		}
