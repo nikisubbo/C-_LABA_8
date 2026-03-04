@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <ctime>
 #include "WorkWithFiles.h"	
 std::string PromptForFileName() {
 	std::cout << "Введите имя файла: ";
@@ -19,12 +20,30 @@ void CreateFile() {
 	file.open(file_name, std::ios::out | std::ios::binary);
 	std::cout << "Введите количество чисел, которые хотите записать в файл: ";
 	std::cin >> n;
-	std::cout << "Введите числа для записи через пробел: ";
-	for (int i = 0; i < n; i++) {
-		double number;
-		std::cin >> number;
-		file.write((char*)&number,sizeof(double));
+	int choice;
+	std::cout << "Как вы хотите заполнить файл?\n1)Ввод с клавиатуры\n2)Рандомно\nВыбор: ";
+	std::cin >> choice;
+	if (choice == 1) {
+		std::cout << "Введите числа для записи через пробел: ";
+		for (int i = 0; i < n; i++) {
+			double number;
+			std::cin >> number;
+			file.write((char*)&number, sizeof(double));
+		}
 	}
+	else if (choice == 2) {
+		srand(time(0));
+		double number = rand() % 10;
+		for (int i = 0; i < n; i++) {
+			number = rand() % 10;
+			file.write((char*)&number, sizeof(double));
+		}
+	}
+	else {
+		std::cout << "Неправильный ввод" << std::endl;
+		return;
+	}
+	file.close();
 	std::cout << "Файл успешно создан" << std::endl;
 }
 
@@ -48,5 +67,6 @@ void PrintFile() {
 	while (file.read((char*)&number, sizeof(double))) {
 		std::cout << number << " ";
 	}
+	file.close();
 	std::cout << std::endl;
 }

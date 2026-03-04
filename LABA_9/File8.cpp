@@ -19,6 +19,8 @@ void File8() {
 	}
 	file_two.write((char*)&first_num, sizeof(double));
 	file_two.write((char*)&last_num, sizeof(double));
+	file_one.close();
+	file_two.close();
 	std::cout << "Программа выполнена, можете проверить содержимое файла через пункт 6 в меню" << std::endl;
 }
 

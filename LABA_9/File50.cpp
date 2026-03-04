@@ -15,14 +15,37 @@ void File50() {
 	std::ofstream file_three;
 	file_three.open(file_name_three, std::ios::out | std::ios::binary);
 	double number_one;
-	while (file_one.read((char*)&number_one, sizeof(double))) {
-		file_three.write((char*)&number_one, sizeof(double));
+	double number_two;
+	file_one.read((char*)&number_one, sizeof(double));
+	file_two.read((char*)&number_two, sizeof(double));
+	std::cout << file_one.gcount();
+	while (file_one.gcount() == sizeof(double) || file_two.gcount() == sizeof(double)) {//сколько считалось и сколько ожидалось считать
+		if (file_one.gcount() == sizeof(double) && file_two.gcount() == sizeof(double)) {
+			if (number_two >= number_one) {
+				file_three.write((char*)&number_one, sizeof(double));
+				file_one.read((char*)&number_one, sizeof(double));
+			}
+			else {
+				file_three.write((char*)&number_two, sizeof(double));
+				file_two.read((char*)&number_two, sizeof(double));
+			}
+		}
+		else if (file_one.gcount() == sizeof(double)) {
+			file_three.write((char*)&number_one, sizeof(double));
+			file_one.read((char*)&number_one, sizeof(double));
+		}
+		else {
+			file_three.write((char*)&number_two, sizeof(double));
+			file_two.read((char*)&number_two, sizeof(double));
+		}
 	}
 	file_one.close();
+	/*
 	double number_two;
 	while (file_two.read((char*)&number_two, sizeof(double))) {
 		file_three.write((char*)&number_two, sizeof(double));
 	}
+	*/
 	file_two.close();
 	file_three.close();
 	std::cout << "ѕрограмма выполнена, можете проверить содержимое файла через пункт 6 в меню" << std::endl;
