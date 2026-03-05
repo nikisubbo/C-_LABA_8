@@ -14,26 +14,26 @@ void CreateFile() {
 	std::string file_name = PromptForFileName();
 	std::fstream file;
 	file.open(file_name, std::ios::out | std::ios::binary);
-	int choice;
+	double choice;
 	std::cout << "Как вы хотите заполнить ваш ьинарный файл?\n1)Ввод с клавиатуры\n2)Рандомно\n3)Из TXT файла\nВыбор: ";
-	std::cin >> choice;
+	choice = PromtForNumber();
 	if (choice == 1) {
-		int n;
+		double n;
 		std::cout << "Введите количество чисел, которые хотите записать в файл: ";
-		std::cin >> n;
+		n = PromtForNumber();
 		std::cout << "Введите числа для записи через пробел: ";
 		for (int i = 0; i < n; i++) {
 			double number;
-			std::cin >> number;
+			number = PromtForNumber();
 			file.write((char*)&number, sizeof(double));
 		}
 	}
 	else if (choice == 2) {
 		srand(time(0));
 		double number = rand() % 10;
-		int n;
+		double n;
 		std::cout << "Введите количество чисел, которые хотите записать в файл: ";
-		std::cin >> n;
+		n = PromtForNumber();
 		for (int i = 0; i < n; i++) {
 			number = rand() % 10;
 			file.write((char*)&number, sizeof(double));
@@ -42,7 +42,7 @@ void CreateFile() {
 	else if (choice == 3) {
 		std::cout << "Введите название файла, c указанием расширения txt: ";
 		std::string txt_file_name;
-		std::cin >> txt_file_name;
+	    txt_file_name = PromtForString();
 		std::ifstream txt_file(txt_file_name);
 		if (!txt_file.is_open()) {
 			std::cout << "Ошибка. Такого файла не существует." << std::endl;
@@ -80,4 +80,23 @@ void PrintFile() {
 	}
 	file.close();
 	std::cout << std::endl;
+}
+double PromtForNumber() {
+	double number;
+	bool flag = true;
+	while (true) {
+		if (!(std::cin >> number)) {
+			std::cin.clear();
+			std::cin.ignore();
+			std::cout << "Ошибка, введено не число." << std::endl;
+			continue;
+		}
+		if (number > std::numeric_limits<double>::max() || number < std::numeric_limits<double>::min()) {
+			std::cin.clear();
+			std::cin.ignore();
+			std::cout << "Ошибка, число слишком большое или слишком маленькое." << std::endl;
+			continue;
+		}
+		return number;
+	}
 }
