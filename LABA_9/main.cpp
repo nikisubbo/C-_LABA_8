@@ -11,7 +11,9 @@ int main() {
     std::cout << menu_message;
     std::cin >> choice;
     while (choice != 7) {
-        if (choice < 1 || choice > 7) {
+        if (choice < 1 || choice > 7 || !(std::cin >> choice)) {
+            std::cin.clear();
+			std::cin.ignore();
             std::cout << "Ошибка. Некорректный ввод, попробуйте еще раз: " << std::endl;
         }
         else {

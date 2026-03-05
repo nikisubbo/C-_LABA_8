@@ -42,7 +42,7 @@ void CreateFile() {
 	else if (choice == 3) {
 		std::cout << "Введите название файла, c указанием расширения txt: ";
 		std::string txt_file_name;
-	    txt_file_name = PromtForString();
+		std::cin >> txt_file_name;
 		std::ifstream txt_file(txt_file_name);
 		if (!txt_file.is_open()) {
 			std::cout << "Ошибка. Такого файла не существует." << std::endl;
