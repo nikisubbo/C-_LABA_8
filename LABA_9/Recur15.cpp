@@ -3,25 +3,25 @@
 #include <climits>
 #include "Recur15.h"
 std::string s;
-int pos = 0;
+int cur_pos = 0;
 int Reading() { // ф-я для чтения 1 символа (числа)
-	return s[pos++] - '0'; 
+	return s[cur_pos++] - '0';// -'0' для преобразования символа в число
 }
 int Term() {
 	int number = Reading();
-	if (pos < s.size() && s[pos] == '*') {
-		pos++;
+	if (cur_pos < s.size() && s[cur_pos] == '*') {
+		cur_pos++;// пропускаем знак умножения
 		return number * Term();
 	}
 	return number;
 }
 
-int Expression(int number = INT_MIN) {
-	if (number == INT_MIN) {
+int Expression(int number = 0, bool flag = true) {// flag для проверки на 1ый вызов
+	if (flag) {
 		number = Term();
 	}
-	if (pos < s.size() && (s[pos] == '+' || s[pos] == '-')) {
-		char operand = s[pos++];
+	if (cur_pos < s.size() && (s[cur_pos] == '+' || s[cur_pos] == '-')) {
+		char operand = s[cur_pos++];// считываем знак
 		int new_term = Term();
 		int new_number = number;
 		if (operand == '+') {
@@ -30,7 +30,7 @@ int Expression(int number = INT_MIN) {
 		else {
 			new_number -= new_term;
 		}
-		return Expression(new_number);
+		return Expression(new_number, false);// рекурсивно вызываем
 	}
 	return number;
 }
@@ -38,6 +38,6 @@ void Recur15() {
 	std::cout << "Задание Recur15" << std::endl;
 	std::cout << "Введите ваше выражение: ";
 	std::cin >> s;
-	pos = 0;
+	cur_pos = 0;
 	std::cout << "Результат: " << Expression() << std::endl;
 }

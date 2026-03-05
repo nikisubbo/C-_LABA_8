@@ -13,12 +13,12 @@ void File8() {
 	file_one.open(file_name_one, std::ios::in | std::ios::binary);
 	file_two.open(file_name_two, std::ios::out | std::ios::binary);
 	double first_num, last_num, current_num;
-	file_one.read((char*)&first_num, sizeof(double));
-	while (file_one.read((char*)&current_num, sizeof(double))) {
+	file_one.read((char*)&first_num, sizeof(double));// читаем первую цифру
+	while (file_one.read((char*)&current_num, sizeof(double))) {//проходим до конца и читаем последнюю цифрй
 		last_num = current_num;
 	}
 	file_two.write((char*)&first_num, sizeof(double));
-	file_two.write((char*)&last_num, sizeof(double));
+	file_two.write((char*)&last_num, sizeof(double));// записываем данные в новый файл
 	file_one.close();
 	file_two.close();
 	std::cout << "Программа выполнена, можете проверить содержимое файла через пункт 6 в меню" << std::endl;
