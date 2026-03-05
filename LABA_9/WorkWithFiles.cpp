@@ -4,26 +4,23 @@
 #include <ctime>
 #include "WorkWithFiles.h"	
 std::string PromptForFileName() {
-	std::cout << "Введите имя файла: ";
+	std::cout << "Введите имя файла с расширением (.dat или .txt): ";
 	std::string file_name;
 	std::cin >> file_name;
-	file_name = file_name + ".dat";
+	file_name = file_name;
 	return file_name;
 }
 void CreateFile() {
-	std::string file_name;
-	std::cout << "Введите название файла: ";
-	std::cin >> file_name;
-	file_name = file_name + ".dat";
-	int n;
+	std::string file_name = PromptForFileName();
 	std::fstream file;
 	file.open(file_name, std::ios::out | std::ios::binary);
-	std::cout << "Введите количество чисел, которые хотите записать в файл: ";
-	std::cin >> n;
 	int choice;
-	std::cout << "Как вы хотите заполнить файл?\n1)Ввод с клавиатуры\n2)Рандомно\nВыбор: ";
+	std::cout << "Как вы хотите заполнить ваш ьинарный файл?\n1)Ввод с клавиатуры\n2)Рандомно\n3)Из TXT файла\nВыбор: ";
 	std::cin >> choice;
 	if (choice == 1) {
+		int n;
+		std::cout << "Введите количество чисел, которые хотите записать в файл: ";
+		std::cin >> n;
 		std::cout << "Введите числа для записи через пробел: ";
 		for (int i = 0; i < n; i++) {
 			double number;
@@ -34,9 +31,28 @@ void CreateFile() {
 	else if (choice == 2) {
 		srand(time(0));
 		double number = rand() % 10;
+		int n;
+		std::cout << "Введите количество чисел, которые хотите записать в файл: ";
+		std::cin >> n;
 		for (int i = 0; i < n; i++) {
 			number = rand() % 10;
 			file.write((char*)&number, sizeof(double));
+		}
+	}
+	else if (choice == 3) {
+		std::cout << "Введите название файла, c указанием расширения txt: ";
+		std::string txt_file_name;
+		std::cin >> txt_file_name;
+		std::ifstream txt_file(txt_file_name);
+		if (!txt_file.is_open()) {
+			std::cout << "Ошибка. Такого файла не существует." << std::endl;
+			return;
+		}
+		else {
+			char number;
+			while (txt_file.get(number)) {
+				file.write((char*)&number, sizeof(char));
+			}
 		}
 	}
 	else {
@@ -48,17 +64,12 @@ void CreateFile() {
 }
 
 void PrintFile() {
-	std::string file_name;
-	std::cout << "Введите название файла для вывода: ";
-	std::cin >> file_name;
-	file_name = file_name + ".dat";
+	std::string file_name = PromptForFileName();
 	std::ifstream file;
 	file.open(file_name, std::ios::in | std::ios::binary);
 	while (!file.is_open()) {
 		std::cout << "Ошибка! Такого файла с таким названием не существует.\n";
-		std::cout << "Введите другое название файла: ";
-		std::cin >> file_name;
-		file_name = file_name + ".dat";
+		file_name = PromptForFileName();
 		file.clear();
 		file.open(file_name, std::ios::in | std::ios::binary);
 	}
