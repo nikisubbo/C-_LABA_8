@@ -127,7 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ListWork13.cpp" />
+    <ClCompile Include="Dynamic26.cpp" />
+    <ClCompile Include="Dynamic4.cpp" />
+    <ClCompile Include="ListWork22.cpp" />
+    <ClCompile Include="ListWork60.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dynamic4.h" />
+    <ClInclude Include="Dynamoc26.h" />
+    <ClInclude Include="ListWork13.h" />
+    <ClInclude Include="ListWork22.h" />
+    <ClInclude Include="ListWork60.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
