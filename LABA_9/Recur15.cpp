@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <climits>
 #include "Recur15.h"
 std::string s;
 int pos = 0;
@@ -14,6 +15,7 @@ int Term() {
 	}
 	return number;
 }
+
 int Expression(int number = INT_MIN) {
 	if (number == INT_MIN) {
 		number = Term();
